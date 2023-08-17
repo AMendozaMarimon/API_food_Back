@@ -1,10 +1,25 @@
-const { Recipe, Diets } = require('../db');
+const { Recipe, Diets } = require("../db");
 
 const newRecipes = async (req, res) => {
-  const { title, image, summary, healthScore, step_by_step, selectedDiets } = req.body;
+  const { title, image, summary, healthScore, step_by_step, selectedDiets } =
+    req.body;
 
-  if (!title || !image || !summary || !healthScore || !step_by_step || !selectedDiets || selectedDiets.length === 0) {
-    return res.status(400).json({ message: "Invalid or missing data. Please provide all required fields, including at least one diet." });
+  if (
+    !title ||
+    !image ||
+    !summary ||
+    !healthScore ||
+    healthScore === 0 ||
+    !step_by_step ||
+    !selectedDiets ||
+    selectedDiets.length === 0
+  ) {
+    return res
+      .status(400)
+      .json({
+        message:
+          "Invalid or missing data. Please provide all required fields, including at least one diet.",
+      });
   }
 
   try {
@@ -18,8 +33,8 @@ const newRecipes = async (req, res) => {
 
     const diets = await Diets.findAll({
       where: {
-        name: selectedDiets
-      }
+        name: selectedDiets,
+      },
     });
 
     await newRecipe.addDiets(diets);
@@ -30,7 +45,7 @@ const newRecipes = async (req, res) => {
     });
 
     return res.status(200).json(allNewRecipe);
-  } catch (error) { 
+  } catch (error) {
     return res.status(500).json({ error: error.message });
   }
 };

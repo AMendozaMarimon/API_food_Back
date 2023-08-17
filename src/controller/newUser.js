@@ -14,14 +14,13 @@ const newUser = async (req, res) => {
 
   if (!isValidEmail(email)) {
     return res.status(400).json({ message: "Invalid email address!" });
-  };
+  }
 
   if (password.length < 6 || password.length > 20) {
-    return res.status(404).json({ message: "Invalid password address!" })
+    return res.status(404).json({ message: "Invalid password address!" });
   }
 
   try {
-
     const existingUser = await Users.findOne({ where: { email: email } });
 
     if (existingUser) {

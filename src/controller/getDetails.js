@@ -41,6 +41,7 @@ const getDetails = async (req, res) => {
         return res.json(detailAPI);
       }
     } else {
+      // Es un ID de BD
       const dbRecipe = await Recipe.findOne({
         where: {
           id: id,
