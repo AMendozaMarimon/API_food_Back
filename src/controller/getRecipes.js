@@ -32,7 +32,7 @@ const getRecipes = async (req, res) => {
       include: {
         model: Diets,
         attributes: ["name"],
-        through: { attributes: [] },
+        through: { attributes: [] }, //NO TRAER NADA DE LA TABLA INTERMEDIA
       },
     });
 

@@ -1,10 +1,11 @@
 const { Users } = require("../db");
+const bcrypt = require("bcrypt");
 
 const login = async (req, res) => {
   const { email, password } = req.query;
 
   if (!email || !password) {
-    return res.status(500).json({ message: "Missing dates" });
+    return res.status(500).json({ message: "¡Missing dates!" });
   }
 
   try {
@@ -15,11 +16,13 @@ const login = async (req, res) => {
     });
 
     if (!user) {
-      return res.status(494).json({ message: "User not found" });
+      return res.status(494).json({ message: "¡User not found!" });
     }
 
-    if (user.password !== password) {
-      return res.status(403).json({ message: "Password incorrect" });
+    const passwordMatch = await bcrypt.compare(password, user.password);
+
+    if (!passwordMatch) {
+      return res.status(403).json({ message: "¡Incorrect password!" });
     }
 
     return res.json({ access: true });

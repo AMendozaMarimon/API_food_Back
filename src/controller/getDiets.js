@@ -15,18 +15,18 @@ const getDietsApi = async () => {
     }
   );
 
-  const dietsApi = response.data.results
+  const dietsApi = response.data.results //SE BUSCA LAS PROPIEDADES DIETAS
     ? response.data.results.map((diet) => diet.diets)
     : [];
 
   let allDiets = [];
 
-  dietsApi.forEach((diet) => diet.forEach((dieta) => allDiets.push(dieta)));
+  dietsApi.forEach((diet) => diet.forEach((dieta) => allDiets.push(dieta))); //SE TOMA EL VALOR DE CADA DIETA
 
   return allDiets;
 };
 
-const createDietsDB = async () => {
+const createDietsDB = async () => { // SE CREA CADA DIETA EB LA BASE DE DATOS
   const diets = await getDietsApi();
   diets.forEach(async (diet) => {
     await Diets.findOrCreate({
@@ -37,14 +37,14 @@ const createDietsDB = async () => {
   });
 };
 
-const getAllDiet = async () => {
+const getAllDiet = async () => { //SOLICITAMOS TODAS LAS DIETAS
   await createDietsDB();
   const allDiets = await Diets.findAll();
 
   return allDiets;
 };
 
-const getDiets = async (req, res) => {
+const getDiets = async (req, res) => { //TOMAMOS EL "NAME" DE LAS DIETAS
   try {
     const diets = await getAllDiet();
     const dietsNames = diets.map((diet) => diet.name);

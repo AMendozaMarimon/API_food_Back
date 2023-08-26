@@ -18,7 +18,7 @@ const newRecipes = async (req, res) => {
       .status(400)
       .json({
         message:
-          "Invalid or missing data. Please provide all required fields, including at least one diet.",
+          "¡There's been a problem!",
       });
   }
 

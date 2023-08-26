@@ -44,8 +44,8 @@ Recipe.belongsTo(Users);
 Diets.belongsTo(Users);
 Users.belongsTo(Diets);
 
-Recipe.belongsToMany(Diets, { through: 'RecipeDiets' });
-Diets.belongsToMany(Recipe, { through: 'RecipeDiets' });
+Recipe.belongsToMany(Diets, { through: 'RecipeDiets' }); //MUCHOS A MUCHOS
+Diets.belongsToMany(Recipe, { through: 'RecipeDiets' }); //MUCHOS A MUCHOS
 
 module.exports = {
   ...sequelize.models, 
